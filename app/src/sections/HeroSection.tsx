@@ -58,7 +58,7 @@ export default function HeroSection() {
       {/* Background Image */}
       <img
         ref={imageRef}
-        src="/hero-bg-new.png"
+        src="/hero-bg-new.webp"
         alt="Misbahullah in laboratory with microscope"
         className="absolute top-0 left-0 w-full h-[130%] object-cover"
       />
