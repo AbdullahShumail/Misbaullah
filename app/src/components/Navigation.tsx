@@ -37,7 +37,7 @@ export default function Navigation() {
   return (
     <>
       {/* Floating Dark Capsule Navigation */}
-      <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-[900px] px-4">
+      <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-[60] w-full max-w-[900px] px-4">
         <div
           className={`flex items-center justify-between h-[56px] px-2 rounded-full transition-all duration-500 ${
             scrolled
@@ -84,14 +84,18 @@ export default function Navigation() {
             Download CV
           </a>
 
-          {/* Mobile: Hamburger */}
+          {/* Mobile: Hamburger (toggles open/close) */}
           <button
-            onClick={() => setMobileOpen(true)}
+            onClick={() => setMobileOpen((prev) => !prev)}
             className="lg:hidden text-white/70 p-3 pr-4"
-            aria-label="Open menu"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+              {mobileOpen ? (
+                <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
             </svg>
           </button>
         </div>
@@ -99,35 +103,21 @@ export default function Navigation() {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-[45] bg-[#1a1a1a]/98 backdrop-blur-xl transition-all duration-300 lg:hidden ${
-          mobileOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        className={`fixed inset-0 z-[55] bg-[#1a1a1a]/95 backdrop-blur-2xl transition-all duration-300 lg:hidden ${
+          mobileOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
+        onClick={() => setMobileOpen(false)}
       >
-        <div className="flex flex-col items-center justify-center h-full gap-6 relative">
-          <button
-            onClick={() => setMobileOpen(false)}
-            className="absolute top-6 right-6 text-white/60 p-2 hover:text-white transition-colors"
-            aria-label="Close menu"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-
-          <a
-            href="#top"
-            onClick={(e) => handleNavClick(e, '#top')}
-            className="font-body text-xl font-bold text-white mb-4"
-          >
-            Misbahullah
-          </a>
-
+        <div
+          className="flex flex-col items-center justify-center h-full gap-7"
+          onClick={(e) => e.stopPropagation()}
+        >
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="font-body text-lg font-normal text-white/60 hover:text-white transition-colors"
+              className="font-body text-xl font-medium text-white hover:text-white/80 transition-colors"
             >
               {link.label}
             </a>
@@ -136,7 +126,7 @@ export default function Navigation() {
           <a
             href="/cv-misbahullah.pdf"
             download
-            className="mt-6 font-body text-sm font-semibold text-white border border-white/25 rounded-full px-8 py-3 hover:bg-white/10 transition-all"
+            className="mt-4 font-body text-sm font-semibold text-white border border-white/30 rounded-full px-8 py-3 hover:bg-white/10 transition-all"
             onClick={() => setMobileOpen(false)}
           >
             Download CV
